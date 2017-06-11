@@ -32,6 +32,7 @@ namespace IdleMaster
 
         public bool IsCookieReady;
         public bool IsSteamReady;
+        // zhenying TimeLeft
         public int TimeLeft = 900;
         public int RetryCount = 0;
         public int ReloadCount = 0;
@@ -106,6 +107,7 @@ namespace IdleMaster
         {
             foreach (var badge in CanIdleBadges.Where(b => !Equals(b, CurrentBadge)))
             {
+                // zhenying 2 hours?
                 if (badge.HoursPlayed >= 2 && badge.InIdle)
                     badge.StopIdle();
 
@@ -290,7 +292,9 @@ namespace IdleMaster
             tmrCardDropCheck.Enabled = true;
 
             // Reset the timer
-            TimeLeft = CurrentBadge.RemainingCard == 1 ? 300 : 900;
+            // zhenying 5 minutes or 15 minutes?
+            //TimeLeft = CurrentBadge.RemainingCard == 1 ? 300 : 900;
+            TimeLeft = CurrentBadge.RemainingCard == 1 ? 10 : 30;
 
             // Set the correct buttons on the form for pause / resume
             btnResume.Visible = false;
@@ -551,8 +555,12 @@ namespace IdleMaster
                 NextIdle();
             else
             {
+                // zhenying make it skip to next item
+                StopIdle();
+                AllBadges.RemoveAll(b => Equals(b, CurrentBadge));
+                StartIdle();
                 // Resets the clock based on the number of remaining drops
-                TimeLeft = badge.RemainingCard == 1 ? 300 : 900;
+                //TimeLeft = badge.RemainingCard == 1 ? 300 : 900;
             }
 
             lblCurrentRemaining.Text = badge.RemainingCard + " " + localization.strings.card_drops_remaining;
