@@ -552,21 +552,24 @@ namespace IdleMaster
         public async Task CheckCardDrops(Badge badge)
         {
             if (!await badge.CanCardDrops())
+            {
                 NextIdle();
+                lblCurrentRemaining.Text = badge.RemainingCard + " " + localization.strings.card_drops_remaining;
+                pbIdle.Value = pbIdle.Maximum - badge.RemainingCard;
+                lblHoursPlayed.Text = badge.HoursPlayed + " " + localization.strings.hrs_on_record;
+                UpdateStateInfo();
+            }
             else
             {
                 // zhenying make it skip to next item
                 StopIdle();
                 AllBadges.RemoveAll(b => Equals(b, CurrentBadge));
+                AllBadges.Add(CurrentBadge);
                 StartIdle();
                 // Resets the clock based on the number of remaining drops
                 //TimeLeft = badge.RemainingCard == 1 ? 300 : 900;
+                //TimeLeft = badge.RemainingCard == 1 ? 10 : 30;
             }
-
-            lblCurrentRemaining.Text = badge.RemainingCard + " " + localization.strings.card_drops_remaining;
-            pbIdle.Value = pbIdle.Maximum - badge.RemainingCard;
-            lblHoursPlayed.Text = badge.HoursPlayed + " " + localization.strings.hrs_on_record;
-            UpdateStateInfo();
         }
 
         public frmMain()
