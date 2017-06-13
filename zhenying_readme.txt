@@ -2,3 +2,4 @@ The steam-idle.exe and Steamworks.NET.dll are out-of-dated. Download the release
 Steamworks.NET.dll is not compatiable with x64. Build the solution with x86 solve the issue.
 
 
+eol
